@@ -1,0 +1,8 @@
+raw_data
+.ipynb_checkpoints
+.DS_Store
+nn_data_cfuv
+processed_input_data
+*.zip
+*__MACOSX
+*__pycache__
