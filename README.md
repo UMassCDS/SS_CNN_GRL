@@ -1,8 +1,7 @@
 # SSF-CNN
-
 ## Introduction 
 This repository contains: 
-- **Data_Processing** codes generate labeled input dataset and split into 3 subsets.
+**Data_Processing** codes generate labeled input dataset and split into 3 subsets.
     * Convert and cropped raw .mat into appropriately sized .npy 
     * Calculate KE label for each input
     * Split data into train:eval:test based on specified criteria 
