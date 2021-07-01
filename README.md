@@ -2,7 +2,10 @@
 
 ## Introduction 
 This repository contains: 
-- **Data_Processing** codes generate appropriated sized data and calculate label for training directly from raw matlab image in a format ready for DataGenerator to feed mini-batch into training.  
+- **Data_Processing** codes generate labeled input dataset and split into 3 subsets.
+-   * Convert and cropped raw .mat into appropriately sized .npy 
+-   * Calculate KE label for each input
+-   * Split data into train:eval:test based on specified criteria 
 
 - **data_display** codes generate visualization to cross check that slicing window and label are correctly processed. 
 - **train_KE** codes utilize KerasDataGenerator and KerasImageAugmentation to train the model, in which its weights are adjusted solely based on TrainingData. However, to ensure that the model is not overtrained, EvalData is used to select 'best_model'
