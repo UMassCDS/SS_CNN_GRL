@@ -1,4 +1,3 @@
-# SSF-CNN
 ## Introduction 
 This repository contains: 
 - **SSF_CNN_GRL/Data_Processing** codes generate labeled input dataset and split into 3 subsets.
@@ -13,7 +12,9 @@ This repository contains:
 ## Background
 Crustal deformation occurs both as localized slip along faults and distributed deformation between active faults via a range of processes including folding, development of pervasive cleavage/foliation and/or slip along fractures within fault damage. Estimates of coseismic off fault deformation along strike-slip faults confirm the supposition that faults with smoother traces can more efficiently accommodate strike slip than faults with rough/complex traces. This hypothesis is also supported by scaled physical experiments of strike-slip fault evolution that directly document that as faults mature from echelon segments to smoother through-going faults, the % of fault slip quantified as kinematic efficiency (1- % off fault deformation) increases. 
 
-In this study, we propose to harness machine learning on rich experimental time series data to provide estimates of kinematic efficiency directly from pattern of active strike-slip fault trace. Physical experiments that are scaled to simulate crustal strike-slip fault development allow direct and detailed observation of both active fault trace and kinematic efficiency under a range of conditions.
+In this study, we propose to harness machine learning on rich experimental time series data to provide estimates of kinematic efficiency directly from pattern of active strike-slip fault trace. Physical experiments that are scaled to simulate crustal strike-slip fault development allow direct and detailed observation of both active fault trace and kinematic efficiency under a range of condition
+<img src="https://github.com/laainam/SSF-CNN/blob/master/image/ch4_fig1.png" width="800">
+
 
 ## Environment Requirement 
 ```ruby
@@ -42,7 +43,19 @@ cd SSF-CNN
 - Run **SSF_CNN_GRL/Model/Eval**.
 	* To predict unseen dataset using post-trained 'best model'
   
-## Image Processing
+## CNN Architecture and Training Performance 
 
-![Image of raw experimental channels](https://github.com/laainam/SSF-CNN/blob/master/image/raw_exp_img.png)
+<img src="https://github.com/laainam/SSF-CNN/blob/master/image/ch4_fig2.png" width="800">
+
+## Prediction Performance 
+<img src="https://github.com/laainam/SSF-CNN/blob/master/image/ch4_fig3_3.png" width="800">
+
+## Summary
+While seismic hazard analyses benefit from estimates of off-fault deformation, we do not have reliable ways to measure the portion of strain that is accommodated off faults. Here, we offer an alternative approach for KE prediction using a 2D Convolutional Neural Network, that is trained directly on images of fault maps produced by fault experiments scaled to simulate crustal strike-slip faults. Our dataset captures the whole evolution of strike-slip faults and allows precise calculation of off-fault deformation (1-KE).  We use a custom loss function and custom accuracy, which fully utilize both the KE labels and their standard deviation. We tune the set of hyperparameters to optimize our CNN training. The final CNN model has the ability to predict on an unseen test dataset with 91% accuracy. Lastly, the match of the CNN to crustal fault maps with off-fault deformation estimates shows the potential for applying experimentally trained CNNs to crustal faults. 
+
+## Co-authors / Full Paper 
+- L. Chaipornkaew, H. Elston, M. Cooke, T. Mukerji, S. Graham 
+- The full extent of this work can be found here (link to GRL paper).
+
+
 
