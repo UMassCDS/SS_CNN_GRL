@@ -6,7 +6,7 @@ Where the earth deforms at the boundaries between tectonic plates, some of the d
 
 This repository contains the end-to-end codes to predict off fault deformation directly from fault maps using CNN. This repository contains:
 
-- ```SSF_CNN_GRL/Data_Processing.ipynb```: code to generate labeled input dataset and split into 3 subsets.
+- ```SSF_CNN_GRL/Data_Processing.ipynb```: code to convert raw .mat data into appproipriated size, generate labeled input dataset, and split into 3 subsets.
 
 - ```SSF_CNN_GRL/Model/Train.ipynb```code to setup a training session for CNN. This code define model architecture and utilize KerasDataGenerator and KerasImageAugmentation to feed appropriated augmented data for trainining.
 
@@ -29,43 +29,45 @@ pip install -r requirement.txt
 ## Download
 - **Code** Clone from github
 ```ruby
-git clone https://github.com/laainam/SSF-CNN.git
-cd SSF-CNN
+git clone https://github.com/laainam/SS_CNN_GRL.git
+cd SS_CNN_GRL
 ```
 - **Raw Matlab** experiment files can be download as [raw_matlab.zip](https://figshare.com/s/3ea3c27706a7aab3d01c). It should be unzipped into 'SSF_CNN_GRL/raw_data/raw_matlab' folder.
 
-## containment
-This repository contains: 
-- **SSF_CNN_GRL/Data_Processing** codes generate labeled input dataset and split into 3 subsets.
-    * Convert and crop raw .mat into appropriately-sized .npy input files
-    * Calculate KE label for each input
-    * Split data into train:eval:test based on specified criteria 
-
-- **SSF_CNN_GRL/Model/Train** codes utilize KerasDataGenerator and KerasImageAugmentation to feed appropriated augmented data for trainining. The CNN's weights are adjusted solely based on Training Dataset. However, we select 'best_model' based on the performance of the Evaluation dataset. 
-
-- **SSF_CNN_GRL/Model/Evaluate**  codes apply the 'best_model' on unseen data (Evaluation Dataset and Test Dataset) to predict KE, as well as reaffirm its ability to accurately predict Train Dataset.  
-
 
 ## Run
-- Run **SSF_CNN_GRL/Data_Processing.ipynb** to process raw matlab into ready-to-use .npy input files (labeled).  
+- Run ```SSF_CNN_GRL/Data_Processing.ipynb``` to process raw matlab into ready-to-use .npy input files (labeled).  
 	* Cropped .npy files with label embeded in file names saved in 'SSF_CNN_GRL/processed_input_data/slice_npy' folder
 	* Split dataset can be called using 'train_master.txt', 'eval_master.txt', 'test_master.txt' located in 'SSF_CNN_GRL/processed_input_data/split_master' folder
-- Run **SSF_CNN_GRL/Model/Train**. 
+- Run ```SSF_CNN_GRL/Model/Train``` 
  	* SSF_CNN_GRL/Model/experimements/archive_final_run store the post-trained models for reference.
 		* Do not re-train or save over, to be used for evaluation.  
 	* Each training session require a set of hyperparameters, which are stored in 'params.json'. 
  		* 'SSF_CNN_GRL/Model/experimements/run1 contains a 'params.json' file ready for training. 
       *  With random initialization, model performance may differ from the archive's performance, but should maintain consistent performance using similar optimal hyperparameter sets. 
       *  Manually update selectedE, using 'Epoch' that show higest 'Eval_2SD_Accuracy'
-- Run **SSF_CNN_GRL/Model/Eval**.
+- Run ```SSF_CNN_GRL/Model/Eval```
 	* To predict unseen dataset using post-trained 'best model'
   
-## CNN Architecture and Training Performance 
+## Customized Loss Function  & Accuracy Metric
+Convolutional Neural Networks (CNNs) trained using experimental strike-slip fault maps can provide a useful way to describe the complex and non-linear relationship between active fault trace complexity and kinematic efficiency. Learning directly from fault maps eliminates the need to prescribe exact equations to describe complex failure behaviors. The proposed CNNs learn how active fault traces relate to KE by minimizing a custom loss function L based on a normalized mean square error as shown in Eq. 1
 
+<img src="https://github.com/laainam/SS_CNN_GRL/blob/main/image/eq1.png" width="500">
+The mean square error (MSE) is the squared difference of the estimated values (KE prediction, yi) and the truth (KE label, yi). A small value of ensures a non-zero divisor. Our custom loss function scales MSE with the squared standard deviation of KE (SD), allowing the model to learn more precisely where we have the most confidence while relaxing the learning conditions where uncertainties are high
+
+We assess the performance of our CNN networks by considering the prediction as correct if the absolute difference of the predicted KE and the true KE label fit within two standard deviations of the label (Eq. 2). 
+<img src="https://github.com/laainam/SS_CNN_GRL/blob/main/image/eq2.png" width="300">
+
+## CNN Architecture and Training Performance
+
+To ensure that the trained CNN can generalize to unseen data, we use the minimum loss (Eq. 1) of the evaluation dataset to guide tuning of the hyperparameters. The best model, and all repeated training runs illustrate a good fit, and the CNN model stops improving after approximately 50 training epochs, where we impose an early stopping of the training process(Fig. 2b). Additionally, we confirm the repeatability of the models’ performance by reproducing mini-batch accuracy over 90% on all training using the same set of hyperparameters (Table S2) while varying the randomized initialization. 
 
 <img src="https://github.com/laainam/SS_CNN_GRL/blob/main/image/fig2.png" width="800">
 
 ## Prediction Performance 
+
+Applying the selected CNN’s model for prediction tasks, we reach high performance of 96.7% and 96.1% accuracy (Eq.2) in training and evaluation datasets respectively. Similarly,  prediction on an unseen test dataset yields satisfactory performance of 90.9% accuracy. These correct predictions for the majority of the dataset extensively represent experiments with the full range of applied loading rates, basal boundary conditions and stages of fault evolution. On the other hand, the clusters of outliers from more matured faults seem to correlate to individual experiments within a specific KE range. 
+
 <img src="https://github.com/laainam/SS_CNN_GRL/blob/main/image/fig3.png" width="800">
 
 ## Summary
