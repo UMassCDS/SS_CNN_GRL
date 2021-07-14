@@ -1,15 +1,20 @@
+# Prediction of Off-Fault Deformation from Experimental Strike-slip Fault Structures using the Convolutional Neural Networks 
+
+Where the earth deforms at the boundaries between tectonic plates, some of the deformation is taken up as localized slip along fault surfaces and some of the deformation is distributed around the fault. This distributed deformation is very hard to measure in the Earth’s crust. To get around this challenge, we create faults in the laboratory and use the direct measurements of the distributed deformation off of faults to train a machine learning model. The trained model performs well at predicting distributed off-fault deformation from the fault geometry.
+
 ## Introduction 
-This repository contains: 
-- **SSF_CNN_GRL/Data_Processing** codes generate labeled input dataset and split into 3 subsets.
-    * Convert and crop raw .mat into appropriately-sized .npy input files
-    * Calculate KE label for each input
-    * Split data into train:eval:test based on specified criteria 
 
-- **SSF_CNN_GRL/Model/Train** codes utilize KerasDataGenerator and KerasImageAugmentation to train the model, in which its weights are adjusted solely based on Training Dataset. However, we select 'best_model' based on the performance of the Evaluation dataset. 
+This repository contains the end-to-end codes to predict off fault deformation directly from fault maps using CNN. This repository contains:
 
-- **SSF_CNN_GRL/Model/Evaluate**  codes apply the 'best_model' on unseen data (Evaluation Dataset and Test Dataset) to predict KE, as well as reaffirm its ability to accurately  predict Train Dataset.  
+- ```SSF_CNN_GRL/Data_Processing.ipynb```: code to generate labeled input dataset and split into 3 subsets.
 
-## Background
+- ```SSF_CNN_GRL/Model/Train.ipynb```code to setup a training session for CNN. This code define model architecture and utilize KerasDataGenerator and KerasImageAugmentation to feed appropriated augmented data for trainining.
+
+- ```SSF_CNN_GRL/Model/Evaluate.ipynb```: code to apply the 'best_model' on unseen data (Evaluation Dataset and Test Dataset) to predict KE, as well as reaffirm its ability to accurately predict Train Dataset.  
+
+
+
+## Background 
 Crustal deformation occurs both as localized slip along faults and distributed deformation between active faults via a range of processes including folding, development of pervasive cleavage/foliation and/or slip along fractures within fault damage. Estimates of coseismic off fault deformation along strike-slip faults confirm the supposition that faults with smoother traces can more efficiently accommodate strike slip than faults with rough/complex traces. This hypothesis is also supported by scaled physical experiments of strike-slip fault evolution that directly document that as faults mature from echelon segments to smoother through-going faults, the % of fault slip quantified as kinematic efficiency (1- % off fault deformation) increases. 
 
 In this study, we propose to harness machine learning on rich experimental time series data to provide estimates of kinematic efficiency directly from pattern of active strike-slip fault trace. Physical experiments that are scaled to simulate crustal strike-slip fault development allow direct and detailed observation of both active fault trace and kinematic efficiency under a range of condition
@@ -29,6 +34,18 @@ cd SSF-CNN
 ```
 - **Raw Matlab** experiment files can be download as [raw_matlab.zip](https://figshare.com/s/3ea3c27706a7aab3d01c). It should be unzipped into 'SSF_CNN_GRL/raw_data/raw_matlab' folder.
 
+## containment
+This repository contains: 
+- **SSF_CNN_GRL/Data_Processing** codes generate labeled input dataset and split into 3 subsets.
+    * Convert and crop raw .mat into appropriately-sized .npy input files
+    * Calculate KE label for each input
+    * Split data into train:eval:test based on specified criteria 
+
+- **SSF_CNN_GRL/Model/Train** codes utilize KerasDataGenerator and KerasImageAugmentation to feed appropriated augmented data for trainining. The CNN's weights are adjusted solely based on Training Dataset. However, we select 'best_model' based on the performance of the Evaluation dataset. 
+
+- **SSF_CNN_GRL/Model/Evaluate**  codes apply the 'best_model' on unseen data (Evaluation Dataset and Test Dataset) to predict KE, as well as reaffirm its ability to accurately predict Train Dataset.  
+
+
 ## Run
 - Run **SSF_CNN_GRL/Data_Processing.ipynb** to process raw matlab into ready-to-use .npy input files (labeled).  
 	* Cropped .npy files with label embeded in file names saved in 'SSF_CNN_GRL/processed_input_data/slice_npy' folder
@@ -44,6 +61,7 @@ cd SSF-CNN
 	* To predict unseen dataset using post-trained 'best model'
   
 ## CNN Architecture and Training Performance 
+
 
 <img src="https://github.com/laainam/SS_CNN_GRL/blob/main/image/fig2.png" width="800">
 
