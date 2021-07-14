@@ -1,0 +1,80 @@
+custom_accuracy_2SD:
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - &id001 !!python/object/apply:numpy.dtype
+    args:
+    - f4
+    - 0
+    - 1
+    state: !!python/tuple
+    - 3
+    - <
+    - null
+    - null
+    - null
+    - -1
+    - -1
+    - 0
+  - !!binary |
+    KaVQPg==
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - *id001
+  - !!binary |
+    vveePg==
+loss:
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - &id002 !!python/object/apply:numpy.dtype
+    args:
+    - f8
+    - 0
+    - 1
+    state: !!python/tuple
+    - 3
+    - <
+    - null
+    - null
+    - null
+    - -1
+    - -1
+    - 0
+  - !!binary |
+    77333sKiaEA=
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - *id002
+  - !!binary |
+    11prrYa7VkA=
+mse:
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - *id001
+  - !!binary |
+    WfMePw==
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - *id001
+  - !!binary |
+    XKtzPg==
+val_custom_accuracy_2SD:
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - *id001
+  - !!binary |
+    XXQMPw==
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - *id001
+  - !!binary |
+    RhfDPg==
+val_loss:
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - *id002
+  - !!binary |
+    6aKL7uyKNkA=
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - *id002
+  - !!binary |
+    XXTRtfgPOEA=
+val_mse:
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - *id001
+  - !!binary |
+    XGV/Pg==
+- !!python/object/apply:numpy.core.multiarray.scalar
+  - *id001
+  - !!binary |
+    wTvUPQ==
