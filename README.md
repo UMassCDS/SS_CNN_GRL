@@ -2,7 +2,10 @@
 
 Where the earth deforms at the boundaries between tectonic plates, some of the deformation is taken up as localized slip along fault surfaces and some of the deformation is distributed around the fault. This distributed deformation is very hard to measure in the Earth’s crust. To get around this challenge, we create faults in the laboratory and use the direct measurements of the distributed deformation off of faults to train a machine learning model. The trained model performs well at predicting distributed off-fault deformation from the fault geometry.
 
+[![DOI](https://zenodo.org/badge/381946830.svg)](https://zenodo.org/badge/latestdoi/381946830)
+
 ## Introduction 
+
 
 This repository contains the end-to-end codes to predict off fault deformation directly from fault maps using CNN. This repository contains:
 
