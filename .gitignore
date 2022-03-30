@@ -1,6 +1,6 @@
 raw_data
 .ipynb_checkpoints
-.DS_Store
+**/.DS_Store
 nn_data_cfuv
 processed_input_data
 *.zip
