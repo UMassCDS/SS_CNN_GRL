@@ -1,6 +1,7 @@
 import numpy as np
 import tensorflow
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import re
 
 class TrainingGenerator(tensorflow.keras.utils.Sequence):
     def __init__(self, ML_EXP, NPY_FOLDER, file_master, 
@@ -12,8 +13,10 @@ class TrainingGenerator(tensorflow.keras.utils.Sequence):
         self.data_dir = data_dir
         self.ML_EXP = ML_EXP
         self.NPY_FOLDER = NPY_FOLDER
-        self.KEs = np.array([float(f.split('/')[-1][0:4]) for f in self.filenames])
-        self.SDs = np.array([float(f.split('/')[-1][5:9]) for f in self.filenames])
+        # self.KEs = np.array([float(f.split('/')[-1][0:4]) for f in self.filenames])
+        self.KEs = np.array([float(re.findall("\d+\.\d+",f.split('/')[-1])[0]) for f in self.filenames])
+        # self.SDs = np.array([float(f.split('/')[-1][5:9]) for f in self.filenames])
+        self.SDs = np.array([float(re.findall("\d+\.\d+",f.split('/')[-1])[0]) for f in self.filenames])
         self.labels = np.array([self.KEs,self.SDs])
         print(len(self.labels[0]))
         self.dim = dim
@@ -38,7 +41,6 @@ class TrainingGenerator(tensorflow.keras.utils.Sequence):
         'Generate one batch of data'
         # Generate indexes of the batch
         indexes = self.indexes[index*self.batch_size:(index+1)*self.batch_size]
-
         # Find list of of files from these indexes
         filenames = self.filenames[indexes]
         # Generate data
@@ -58,8 +60,11 @@ class TrainingGenerator(tensorflow.keras.utils.Sequence):
         # Initialization
         X = np.empty((self.batch_size, *self.dim, self.n_channels))
         # Generate data
+        print("filenames",filenames)
         for i, filename in enumerate(filenames):
             image_full = np.load(self.data_dir + self.NPY_FOLDER + filename)
+            print("image_full",image_full)
+            print("image_shape",image.shape)
             image = image_full[:,:,1]
             image = self.datagen.random_transform(image.reshape([*image.shape, 1]))
             X[i,] = image
@@ -76,8 +81,10 @@ class EvalTestGenerator(tensorflow.keras.utils.Sequence):
         self.data_dir = data_dir
         self.ML_EXP = ML_EXP
         self.NPY_FOLDER = NPY_FOLDER
-        self.KEs = np.array([float(f.split('/')[-1][0:4]) for f in self.filenames])
-        self.SDs = np.array([float(f.split('/')[-1][5:9]) for f in self.filenames])
+        # self.KEs = np.array([float(f.split('/')[-1][0:4]) for f in self.filenames])
+        self.KEs = np.array([float(re.findall("\d+\.\d+",f.split('/')[-1])[0]) for f in self.filenames])
+        # self.SDs = np.array([float(f.split('/')[-1][5:9]) for f in self.filenames])
+        self.SDs = np.array([float(re.findall("\d+\.\d+",f.split('/')[-1])[0]) for f in self.filenames])
         self.labels = np.array([self.KEs,self.SDs])
         print(len(self.labels[0]))
         self.dim = dim
@@ -96,7 +103,7 @@ class EvalTestGenerator(tensorflow.keras.utils.Sequence):
         'Generate one batch of data'
         # Generate indexes of the batch
         indexes = self.indexes[index*self.batch_size:(index+1)*self.batch_size]
-
+        # print(indexes)
         # Find list of of files from these indexes
         filenames = self.filenames[indexes]
         # Generate data
@@ -119,6 +126,7 @@ class EvalTestGenerator(tensorflow.keras.utils.Sequence):
 
         for i, filename in enumerate(filenames):
             image_full = np.load(self.data_dir + self.NPY_FOLDER + filename)
-            image = image_full[:,:,1]
+            # image = image_full[:,:,1]
+            image = image_full
             X[i,] = image.reshape([*image.shape, 1])
         return X        
