@@ -60,12 +60,13 @@ class TrainingGenerator(tensorflow.keras.utils.Sequence):
         # Initialization
         X = np.empty((self.batch_size, *self.dim, self.n_channels))
         # Generate data
-        print("filenames",filenames)
+        # print("filenames",filenames)
         for i, filename in enumerate(filenames):
             image_full = np.load(self.data_dir + self.NPY_FOLDER + filename)
-            print("image_full",image_full)
-            print("image_shape",image.shape)
+            # print("image_full",image_full)
             image = image_full[:,:,1]
+            # image = image_full
+            # print("image_shape",image.shape)
             image = self.datagen.random_transform(image.reshape([*image.shape, 1]))
             X[i,] = image
         return X
