@@ -38,6 +38,35 @@ cd SS_CNN_GRL
 - **Raw Matlab** experiment files can be download as [raw_matlab.zip](https://figshare.com/s/3ea3c27706a7aab3d01c). It should be unzipped into 'SSF_CNN_GRL/raw_data/raw_matlab' folder.
 
 
+## Directory Structure
+
+### Data
+- `processed_input_data`: Processed clay data (old format)
+- `processed_input_data_clay`: Processed clay data (new format)
+- `processed_input_data_sand`: Processed sand data 64px (new)
+- `processed_input_data_sand_128px`: Processed sand data 128px (new)
+- `raw_mat_new_clay`: Raw Matlab data for clay experiment (new)
+- `raw_npy_clay`: Raw npy data for clay experiment (new)
+- `raw_mat_new_sand`: Raw Matlab data for new sand experiment
+- `raw_npy_sand`: Raw npy data for new sand experiment
+
+### Helper Function
+- `Data_Processing_2022.ipynb`: Modified for new data format for sand and clay
+
+### Processing
+- New script for data processing: `Data_Processing_2022.ipynb`
+
+### Training
+- `Model/Train_Clay_ND.ipynb`: Train with new clay data
+- `Model/Train_Sand_ND.ipynb`: Train with new sand data
+- `Model/Train_Clay.ipynb`: Train with old clay data
+
+### Evaluation Scripts
+- sand (eval) with sand (trained): [Evaluate_sand_with_sand.ipynb](https://gist.github.com/akaysh/5e5eb286e5a900a70423b816537ece1d)
+- sand (eval) with clay (trained): [Evaluate_sand_with_clay.ipynb](https://gist.github.com/akaysh/1e78d7a899540527b2238ef9e264fc80)
+- clay (eval) with clay (trained): [Evaluate_new_clay_with_new_model.ipynb](https://gist.github.com/akaysh/bb6a4d42eb35626a35839f2a1a728016)
+- clay (eval) with old clay model: [Evaluate_new_clay_with_old_model.ipynb](https://gist.github.com/akaysh/9ac7bce1d1c27e8fa871207663ad2e12)
+
 ## Run
 - Run ```SSF_CNN_GRL/Data_Processing.ipynb``` to process raw matlab into ready-to-use .npy input files (labeled).  
 	* Cropped .npy files with label embeded in file names saved in 'SSF_CNN_GRL/processed_input_data/slice_npy' folder

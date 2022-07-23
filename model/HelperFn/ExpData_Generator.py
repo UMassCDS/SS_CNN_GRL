@@ -13,10 +13,22 @@ class TrainingGenerator(tensorflow.keras.utils.Sequence):
         self.data_dir = data_dir
         self.ML_EXP = ML_EXP
         self.NPY_FOLDER = NPY_FOLDER
-        # self.KEs = np.array([float(f.split('/')[-1][0:4]) for f in self.filenames])
-        self.KEs = np.array([float(re.findall("\d+\.\d+",f.split('/')[-1])[0]) for f in self.filenames])
-        # self.SDs = np.array([float(f.split('/')[-1][5:9]) for f in self.filenames])
-        self.SDs = np.array([float(re.findall("\d+\.\d+",f.split('/')[-1])[0]) for f in self.filenames])
+        KEs = []
+        for f in self.filenames:
+            try:
+                KEs.append(float(f.split('/')[-1][0:6]))
+            except:
+                KEs.append(float(0))
+        self.KEs = np.array(KEs)
+        # self.KEs = np.array([float(re.findall("\d+\.\d+",f.split('/')[-1])[0]) for f in self.filenames])
+        SDs = []
+        for f in self.filenames:
+            try:
+                SDs.append(float(f.split('/')[-1][7:13]))
+            except:
+                SDs.append(float(0))
+        self.SDs = np.array(SDs)
+        # self.SDs = np.array([float(re.findall("\d+\.\d+",f.split('/')[-1])[0]) for f in self.filenames])
         self.labels = np.array([self.KEs,self.SDs])
         print(len(self.labels[0]))
         self.dim = dim
@@ -64,8 +76,8 @@ class TrainingGenerator(tensorflow.keras.utils.Sequence):
         for i, filename in enumerate(filenames):
             image_full = np.load(self.data_dir + self.NPY_FOLDER + filename)
             # print("image_full",image_full)
-            image = image_full[:,:,1]
-            # image = image_full
+            # image = image_full[:,:,1]
+            image = image_full
             # print("image_shape",image.shape)
             image = self.datagen.random_transform(image.reshape([*image.shape, 1]))
             X[i,] = image
@@ -82,10 +94,21 @@ class EvalTestGenerator(tensorflow.keras.utils.Sequence):
         self.data_dir = data_dir
         self.ML_EXP = ML_EXP
         self.NPY_FOLDER = NPY_FOLDER
-        # self.KEs = np.array([float(f.split('/')[-1][0:4]) for f in self.filenames])
-        self.KEs = np.array([float(re.findall("\d+\.\d+",f.split('/')[-1])[0]) for f in self.filenames])
-        # self.SDs = np.array([float(f.split('/')[-1][5:9]) for f in self.filenames])
-        self.SDs = np.array([float(re.findall("\d+\.\d+",f.split('/')[-1])[0]) for f in self.filenames])
+        KEs = []
+        for f in self.filenames:
+            try:
+                KEs.append(float(f.split('/')[-1][0:6]))
+            except:
+                KEs.append(float(0))
+        self.KEs = np.array(KEs)
+        # self.KEs = np.array([float(re.findall("\d+\.\d+",f.split('/')[-1])[0]) for f in self.filenames])
+        SDs = []
+        for f in self.filenames:
+            try:
+                SDs.append(float(f.split('/')[-1][7:13]))
+            except:
+                SDs.append(float(0))
+        self.SDs = np.array(SDs)
         self.labels = np.array([self.KEs,self.SDs])
         print(len(self.labels[0]))
         self.dim = dim
